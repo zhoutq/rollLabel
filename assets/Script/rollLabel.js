@@ -39,15 +39,15 @@ cc.Class({
 
         // digit w = lab.w, h = lab.lh
         this.digitNode.width = this.showLabelNode.width;
-        this.digitNode.height = this.showLabelNode.getComponent(cc.Label).lineHeight;
+        this.digitNode.height = this.showLabelNode.height;
 
         // rollBg  h
-        this.rollBgNode.height = this.showLabelNode.getComponent(cc.Label).lineHeight;
+        this.rollBgNode.height = this.showLabelNode.height;
 
         // digit count   todo
 
         this.firstY = 0;
-        this.secondY = this.showLabelNode.getComponent(cc.Label).lineHeight;
+        this.secondY = this.showLabelNode.height;
 
         /** 设置 digit **/
         this.digitNodeArray = [];
@@ -121,7 +121,15 @@ cc.Class({
         // 如果最高位相同，则不播放动画
         if (index > this.animTopDigit) {
             if (_showNum == textDigit) {
-                this.digitNodeArray[index].getChildByName('num').stopAllActions();
+
+                setTimeout(function () {
+                    this.digitNodeArray[index].getChildByName('num').stopAllActions();
+                    //
+                    let  __readyNum = (textDigit + 1) > 9 ? 0 :(textDigit + 1);
+                    this.digitNodeArray[index].getChildByName('num').y = this.firstY;
+                    this.digitNodeArray[index].getChildByName('num').getChildByName('showLabel').getComponent(cc.Label).string = textDigit;
+                    this.digitNodeArray[index].getChildByName('num').getChildByName('readyLabel').getComponent(cc.Label).string = __readyNum;
+                }.bind(this), 0);
                 typeof cb == 'function' && cb();
                 return;
             }
@@ -157,7 +165,14 @@ cc.Class({
 
             if (isStop || index == this.textDigitArray.length - 1) {
                 if (_showNum == textDigit) {
-                    this.digitNodeArray[index].getChildByName('num').stopAllActions();
+                    setTimeout(function () {
+                        this.digitNodeArray[index].getChildByName('num').stopAllActions();
+                        //
+                        let  __readyNum = (textDigit + 1) > 9 ? 0 :(textDigit + 1);
+                        this.digitNodeArray[index].getChildByName('num').y = this.firstY;
+                        this.digitNodeArray[index].getChildByName('num').getChildByName('showLabel').getComponent(cc.Label).string = textDigit;
+                        this.digitNodeArray[index].getChildByName('num').getChildByName('readyLabel').getComponent(cc.Label).string = __readyNum;
+                    }.bind(this), 0);
                     typeof cb == 'function' && cb();
                 }
 
