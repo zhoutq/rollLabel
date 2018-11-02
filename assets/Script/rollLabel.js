@@ -9,15 +9,15 @@ cc.Class({
         digitNode: cc.Node,
         numNode: cc.Node,
         showLabelNode: cc.Node,
+        decimalDigits: 2, // 小数位数, 默认两位(.00),  0：表示整形
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-
         this.text = 0;
-        this.oldTextDigitArray = [0];
-        this.textDigitArray = [0]; // [个，十，百，千，万]
+        this.oldTextDigitArray = [];
+        this.textDigitArray = []; // [个，十，百，千，万]
         this.animTopDigit = 0;// 播放动画最高位（不变化的高位不播动画）
 
         this._initRollLabel();
@@ -26,6 +26,7 @@ cc.Class({
     // 初始化
     _initRollLabel () {
 
+        /** 设置 num **/
         // label
         this.showLabelNode.getComponent(cc.Label).string = 0;
         this.readyLabelNode = cc.instantiate(this.showLabelNode);
@@ -45,18 +46,41 @@ cc.Class({
 
         // digit count   todo
 
-
         this.firstY = 0;
         this.secondY = this.showLabelNode.getComponent(cc.Label).lineHeight;
 
+        /** 设置 digit **/
         this.digitNodeArray = [];
+
+        // 添加小数部分
+        for (let i = 0; i < this.decimalDigits; i++) {
+            let digitNode = cc.instantiate(this.digitNode);
+            digitNode.getChildByName('num').getChildByName('showLabel').getComponent(cc.Label).string = 0;
+            digitNode.getChildByName('num').getChildByName('readyLabel').getComponent(cc.Label).string = 1;
+            this.rollBgNode.addChild(digitNode);
+            this.digitNodeArray.push(digitNode); // 节点管理
+            this.textDigitArray.push(0); // 数值管理
+        }
+
+        // 小数点
+        if ( this.decimalDigits > 0) {
+            let pointNode = cc.instantiate(this.digitNode);
+            pointNode.getChildByName('num').getChildByName('showLabel').getComponent(cc.Label).string = '.';
+            pointNode.getChildByName('num').getChildByName('readyLabel').getComponent(cc.Label).string = '.';
+            this.rollBgNode.addChild(pointNode);
+        }
+
+        // 默认个位整数
+        this.digitNode.removeFromParent();
+        this.rollBgNode.addChild(this.digitNode);
         this.digitNodeArray.push(this.digitNode);
+        this.textDigitArray.push(0); // 数值管理
     },
 
 
     // 增加
     addNum (num) {
-        let count = this.text + parseInt(num);
+        let count = this.text / 1 + num / 1;
         this.setRoolLabelText(count);
     },
 
@@ -66,15 +90,16 @@ cc.Class({
         if (text <= this.text) {
             return;
         }
-
+        this.text = text;
+        text = text.toFixed(this.decimalDigits) + ''; // 格式化到小数点指定位数
+        text = text.split(".").join("");
         this.oldTextDigitArray = this.textDigitArray;
         this.textDigitArray = [];
         this._analysisText(text);
         this._analysisAnimTopDigit();
 
         // 创建没有的位
-        let textString = this.text + '';
-        for (let i = 0; i < this.textDigitArray.length - textString.length; i++) {
+        for (let i = 0; i < this.textDigitArray.length - this.oldTextDigitArray.length; i++) {
             let digitNode = cc.instantiate(this.digitNode);
             digitNode.getChildByName('num').getChildByName('showLabel').getComponent(cc.Label).string = 0;
             digitNode.getChildByName('num').getChildByName('readyLabel').getComponent(cc.Label).string = 1;
@@ -82,7 +107,6 @@ cc.Class({
             this.digitNodeArray.push(digitNode);
         }
 
-        this.text = text;
         this._rollNumber(0); // 滚动个位(数组下标0的值)
     },
 
@@ -118,7 +142,7 @@ cc.Class({
             if (count >= 0) {
                 count++;
             }
-            if (count > 1 && index + 1 < this.textDigitArray.length) {
+            if (count > 0 && index + 1 < this.textDigitArray.length) {
                 count = -9999;
                 setTimeout(function () {
                     this._rollNumber(index + 1, function () {

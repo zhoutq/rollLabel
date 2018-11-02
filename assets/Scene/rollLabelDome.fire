@@ -722,7 +722,8 @@
     },
     "showLabelNode": {
       "__id__": 12
-    }
+    },
+    "decimalDigits": 2
   },
   {
     "__type__": "cc.Node",
@@ -851,7 +852,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "+ 987",
+    "_N$string": "+ 98.7",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -958,7 +959,7 @@
     },
     "component": "rollLabelDome",
     "handler": "btnClick",
-    "customEventData": "987"
+    "customEventData": "98.7"
   },
   {
     "__type__": "cc.Canvas",
