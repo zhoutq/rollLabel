@@ -386,7 +386,7 @@
       "a": 255
     },
     "lineWidth": 2,
-    "labelOutLine": true
+    "labelOutLine": false
   },
   {
     "__type__": "cc.Node",
@@ -515,7 +515,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "+ 12.3",
+    "_N$string": "+ 0.26",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -751,7 +751,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "11.1",
+    "_N$string": "0",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -858,7 +858,7 @@
     },
     "component": "rollLabelDome",
     "handler": "btn2Click",
-    "customEventData": "11.1"
+    "customEventData": "0"
   },
   {
     "__type__": "cc.Canvas",

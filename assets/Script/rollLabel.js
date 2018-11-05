@@ -307,7 +307,7 @@ cc.Class({
     // 解析数据
     _analysisText (text) {
 
-        if (text <= 0) {
+        if (text < 0) {
             return;
         }
 
