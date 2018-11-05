@@ -378,6 +378,7 @@
       "a": 208
     },
     "rollLabelType": 0,
+    "labelOutLine": true,
     "lineColor": {
       "__type__": "cc.Color",
       "r": 238,
@@ -385,8 +386,7 @@
       "b": 10,
       "a": 255
     },
-    "lineWidth": 2,
-    "labelOutLine": false
+    "lineWidth": 0
   },
   {
     "__type__": "cc.Node",

@@ -10,7 +10,6 @@ var RollLabelType = cc.Enum({
 
 cc.Class({
     extends: cc.Component,
-
     properties: {
 
         roollFontSize: 38,
@@ -25,23 +24,21 @@ cc.Class({
             type: RollLabelType,
             default:RollLabelType.LEFT,
         },
+        labelOutLine: false,
         lineColor:  {
             type: cc.Color,
             default:cc.Color.WHITE,
+            visible() {
+                return this.labelOutLine;
+            }
         },
-        lineWidth: 0.1,
-        labelOutLine: {
-            type: cc.Boolean,
-            default: false,
-            // get: function () {
-            //     return this._labelOutLine || true;
-            // },
-            // set: function (value) {
-            //     this._labelOutLine = value;
-            //     this.lineColor.display = false;
-            //     this.lineWidth.display = false;
-            // },
-        }
+        lineWidth: {
+            type: cc.Float,
+            default:0.1,
+            visible() {
+                return this.labelOutLine;
+            }
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
