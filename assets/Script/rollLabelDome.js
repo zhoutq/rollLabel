@@ -16,7 +16,10 @@ cc.Class({
     },
 
     btnClick(e, customEventData) {
-        this.rollLabel.getComponent('rollLabel').addNum(customEventData)
+        this.rollLabel.getComponent('rollLabel').addNum(customEventData);
+    },
+    btn2Click(e, customEventData) {
+        this.rollLabel.getComponent('rollLabel').initRoolLabelWithText(customEventData);
     },
 
 });
